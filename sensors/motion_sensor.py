@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import json 
 from datetime import datetime 
 from mqtt.mqtt_client import connect 
@@ -31,3 +32,21 @@ if __name__ == "__main__":
     run_sensor() 
 
 
+=======
+import time
+import random
+from mqtt.mqtt_client import connect
+
+client = connect()
+
+def publish_motion():
+    while True:
+        motion = random.choice([0, 1])
+        print(f"[Sensor] Motion: {motion}")
+        
+        client.publish("office/motion", motion)
+        time.sleep(7)
+
+if __name__ == "__main__":
+    publish_motion()
+>>>>>>> 379b398 (Added smart lighting controller and device integration)
