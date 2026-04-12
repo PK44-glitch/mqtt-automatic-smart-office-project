@@ -15,7 +15,7 @@ def is_late_hours():
     current_hour = datetime.now().hour 
 
     if demo_mode:
-        return True 
+        return False 
     
     if current_hour >= 22 or current_hour < 6: 
         return True 
