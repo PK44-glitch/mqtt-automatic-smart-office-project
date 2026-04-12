@@ -4,10 +4,10 @@ from datetime import datetime
 
 topic_motion = "smart_office/security/motion"
 topic_alarm = "smart_office/security/alarm"
-topic_dasboard = "smart_office/security/dashboard"
+topic_dashboard = "smart_office/security/dashboard"
 
 #only kept in True while testing 
-demo_mode = True 
+demo_mode = False 
 
 client = connect() 
 
@@ -32,13 +32,13 @@ def on_message(client, userdata, msg):
     if data["motion_detected"] == True:
         if is_late_hours():
             message = {
-            "alarm_status": "ON", 
-            "reason": "Motion detected during late hours", 
-            "time": str(datetime.now())
+                "alarm_status": "ON", 
+                "reason": "Motion detected during late hours", 
+                "time": str(datetime.now())
         }
 
         client.publish(topic_alarm, json.dumps(message))
-        client.publish(topic_dasboard, json.dumps(message))
+        client.publish(topic_dashboard, json.dumps(message))
         print("Alarm message sent")
 
     else: 
@@ -49,14 +49,14 @@ def on_message(client, userdata, msg):
         }
         
         client.publish(topic_alarm, json.dumps(message))
-        client.publish(topic_dasboard, json.dumps(message))
+        client.publish(topic_dashboard, json.dumps(message))
         print("No alarm, normal hours")
 
 client.on_connect = on_connect
 client.on_message = on_message 
 
-def run_contoller():
+def run_controller():
     client.loop_forever()
 
 if __name__ == "__main__": 
-    run_contoller() 
+    run_controller() 
