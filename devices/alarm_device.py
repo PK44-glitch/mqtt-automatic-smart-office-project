@@ -8,11 +8,14 @@ def on_message(client, userdata, msg):
     data = json.loads(msg.payload.decode())
 
     if data["alarm_status"] == "ON": 
-        print("ALARM ON:", data["reason"]) 
+        print("ALARM IS ON")
         print("Reason:", data["reason"]) 
         print("Time:", data["time"])
     else: 
-        print("Alarm is OFF")
+        print("ALARM IS OFF")
+        print("Reason:", data["reason"])
+        print("Time:", data["time"])
+
      
 
 client.on_message = on_message
