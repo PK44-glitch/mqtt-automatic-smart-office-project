@@ -8,3 +8,5 @@ def turn_off():
     #Defines another function called turn_off 
     #This represents - switching the lighbt OFF
     # prints light device is off
+turn_on()
+turn_off()
