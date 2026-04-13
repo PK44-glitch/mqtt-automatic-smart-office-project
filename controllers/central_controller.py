@@ -1,4 +1,4 @@
-from controllers.lighting_controller import handle_light
+from controllers.ligthting_controller import handle_light
 
 light_level = 1000
 motion_detected = False
