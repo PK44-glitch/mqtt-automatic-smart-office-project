@@ -1,21 +1,12 @@
-from mqtt.mqtt_client import connect
-from controllers.central_controller import process_message
+import threading 
+from controllers.ligthting_controller import run_controller as run_ligthing 
+from controllers.security_controller import run_controller as run_security 
 
-def on_connect(client, userdata, flags, rc):
-    print("Connected to broker")
-    client.subscribe("office/light_level")
-    client.subscribe("office/motion")
+light_thread = threading.Thread(target=run_ligthing)
+security_thread = threading.Thread(target=run_security)
 
-def on_message(client, userdata, msg):
-    topic = msg.topic
-    payload = msg.payload.decode()
+light_thread.start()
+security_thread.start()
 
-    print(f"[MQTT] {topic}: {payload}")
-    process_message(topic, payload)
-
-client = connect()
-
-client.on_connect = on_connect
-client.on_message = on_message
-
-client.loop_forever()
+light_thread.join()
+security_thread.join()
