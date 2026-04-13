@@ -1,4 +1,4 @@
-from mqtt.mqtt_client import connect 
+from mqtt.mqtt_client import connect
 import json 
 from datetime import datetime 
 
@@ -52,11 +52,11 @@ def on_message(client, userdata, msg):
         client.publish(topic_dashboard, json.dumps(message))
         print("No alarm, normal hours")
 
-client.on_connect = on_connect
-client.on_message = on_message 
-
 def run_controller():
-    client.loop_forever()
+    client = connect()
+    client.on_connect = on_connect
+    client.on_message = on_message
+    client.loop_forever
 
 if __name__ == "__main__": 
-    run_controller() 
+    run_controller()
