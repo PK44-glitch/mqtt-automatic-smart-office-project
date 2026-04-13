@@ -6,7 +6,7 @@ client = connect()
 
 def on_connect(client, userdata, flags, rc):
     print("Alarm device connected")
-    client.subcribe(topic_alarm) 
+    client.subscribe(topic_alarm) 
 
 def on_message(client, userdata, msg): 
     data = json.loads(msg.payload.decode())
@@ -23,7 +23,8 @@ def on_message(client, userdata, msg):
      
 client.on_connect = on_connect 
 client.on_message = on_message
-client.loop_forever() 
+client.loop_forever()
+
 
 
 
