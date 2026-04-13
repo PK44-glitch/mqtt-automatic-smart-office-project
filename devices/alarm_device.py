@@ -20,10 +20,15 @@ def on_message(client, userdata, msg):
         print("Reason:", data["reason"])
         print("Time:", data["time"])
 
-     
-client.on_connect = on_connect 
-client.on_message = on_message
-client.loop_forever()
+def run_alarm():
+    client = connect()
+    client.on_connect = on_connect
+    client.on_message = on_message
+    client.loop_forever()
+
+if __name__ == "__main__":
+    run_alarm()
+    
 
 
 
