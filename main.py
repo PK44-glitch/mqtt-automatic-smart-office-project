@@ -1,21 +1,29 @@
-from mqtt.mqtt_client import connect
-from controllers.central_controller import process_message
+import threading
 
-def on_connect(client, userdata, flags, rc):
-    print("Connected to broker")
-    client.subscribe("office/light_level")
-    client.subscribe("office/motion")
+from controllers.lighting_controller import run_controller as run_lighting_controller
+from controllers.security_controller import run_controller as run_security_controller
+from sensors.motion_sensor import run_lighting_sensor, run_security_sensor
+from devices.alarm import run_alarm
+from dashboard import run_dashboard
 
-def on_message(client, userdata, msg):
-    topic = msg.topic
-    payload = msg.payload.decode()
 
-    print(f"[MQTT] {topic}: {payload}")
-    process_message(topic, payload)
+lighting_controller_thread = threading.Thread(target=run_lighting_controller)
+security_controller_thread = threading.Thread(target=run_security_controller)
+lighting_sensor_thread = threading.Thread(target=run_lighting_sensor)
+security_sensor_thread = threading.Thread(target=run_security_sensor)
+alarm_thread = threading.Thread(target=run_alarm)
+dashboard_thread = threading.Thread(target=run_dashboard)
 
-client = connect()
+lighting_controller_thread.start()
+security_controller_thread.start()
+lighting_sensor_thread.start()
+security_sensor_thread.start()
+alarm_thread.start()
+dashboard_thread.start()
 
-client.on_connect = on_connect
-client.on_message = on_message
-
-client.loop_forever()
+lighting_controller_thread.join()
+security_controller_thread.join()
+lighting_sensor_thread.join()
+security_sensor_thread.join()
+alarm_thread.join()
+dashboard_thread.join()

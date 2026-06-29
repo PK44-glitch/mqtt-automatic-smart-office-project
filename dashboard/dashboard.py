@@ -17,10 +17,11 @@ def on_message(client, userdata, msg):
     print("Time:", data["time"])
     print("--------------------")                    
 
-client.on_connect = on_connect
-client.on_message = on_message
 
-def run_dashboard(): 
+def run_dashboard():
+    client = connect()
+    client.on_connect = on_connect
+    client.on_message = on_message
     client.loop_forever()
 
 if __name__ == "__main__": 
